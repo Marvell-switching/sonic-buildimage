@@ -43,7 +43,7 @@ else:
         'importlib-resources==3.3.1',  # importlib-resources v4.0.0 was released 2020-12-23 and drops support for Python 2
         'contextlib2==0.6.0.post1',
         # PyYAML 6.0 and newer dropped support for Python 2.7
-        'pyyaml==5.4.1',
+        'pyyaml==5.3.1',
     ]
 
 # Common modules for python2 and python3

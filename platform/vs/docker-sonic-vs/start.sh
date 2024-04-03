@@ -178,7 +178,9 @@ supervisorctl start tunnelmgrd
 
 supervisorctl start fabricmgrd
 
-supervisorctl start schedulermgrd
+supervisorctl start timerangemgrd
+
+supervisorctl start timebasedconfigmgrd
 
 supervisorctl start cron
 

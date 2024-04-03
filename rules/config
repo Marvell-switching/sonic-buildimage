@@ -154,6 +154,7 @@ INCLUDE_NAT = y
 
 # INCLUDE_DHCP_RELAY - build and install dhcp-relay package
 INCLUDE_DHCP_RELAY = y
+INCLUDE_HELLO_ZZZ = y
 
 # INCLUDE_DHCP_SERVER - build and install dhcp-server package
 INCLUDE_DHCP_SERVER ?= n

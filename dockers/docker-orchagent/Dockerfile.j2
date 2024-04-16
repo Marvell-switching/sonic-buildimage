@@ -23,7 +23,7 @@ RUN apt-get update &&       \
         # Needed for installing netifaces Python package
         build-essential     \
         python3-dev         \
-        # Used for schedulermgrd
+        # Used for scheduledconfigmgrd
         cron
 
 {% if ( CONFIGURED_ARCH == "armhf" or CONFIGURED_ARCH == "arm64" ) %}

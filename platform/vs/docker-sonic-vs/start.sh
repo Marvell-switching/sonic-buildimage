@@ -180,7 +180,7 @@ supervisorctl start fabricmgrd
 
 supervisorctl start timerangemgrd
 
-supervisorctl start timebasedconfigmgrd
+supervisorctl start scheduledconfigmgrd
 
 supervisorctl start cron
 

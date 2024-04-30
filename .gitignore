@@ -111,3 +111,9 @@ sources.list.*
 
 # Generated mirror configs
 apt-retries-count
+
+# Python venv
+venv/**
+
+src/protobuf/**
+fsroot-vs/**

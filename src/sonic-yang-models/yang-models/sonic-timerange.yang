@@ -2,7 +2,7 @@ module sonic-timerange {
 
     yang-version 1.1;
 
-    namespace "http://github.com/sonic-net/sonic-timerage";
+    namespace "http://github.com/sonic-net/sonic-timerange";
     prefix timerange;
 
     description "TIME_RANGE YANG Module for SONiC OS Used for Scheduled Configuration";
@@ -18,29 +18,34 @@ module sonic-timerange {
             description "TIME_RANGE part of config_db.json";
 
             list TIME_RANGE_LIST {
-                description "List of time ranges, each identified by unique name"
+                description "List of time ranges, each identified by unique name";
 
                 key "name";
+
+                leaf name {
+                    type string;
+                    description "Unique name for the time range";
+                }
 
                 leaf start {
                     mandatory true;
                     type string {
-                        length 1..255;
+                        length "1..255";
                     }
-                    description "start time for time range";
+                    description "Start time for time range";
                 }
 
                 leaf end {
                     type string {
-                        length 1..255;
+                        length "1..255";
                     }
-                    description "end time for time range";
+                    description "End time for time range";
                 }
 
                 leaf runOnce {
                     type boolean;
                     default "false";
-                description "Indicates whether the time range should trigger only once.";
+                    description "Indicates whether the time range should trigger only once.";
                 }
             } /* end of list TIME_RANGE_LIST */
             
@@ -49,4 +54,3 @@ module sonic-timerange {
     } /* end of top level container */
     
 } /* end of module sonic-timerange */
-

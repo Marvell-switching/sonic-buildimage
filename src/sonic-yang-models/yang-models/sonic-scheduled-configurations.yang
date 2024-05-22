@@ -18,21 +18,26 @@ module sonic-scheduled-configurations {
             description "TIME_RANGE part of config_db.json";
 
             list SCHEDULED_CONFIGURATIONS_LIST {
-                description "List of scheduled configurations, each identified by unique name"
+                description "List of scheduled configurations, each identified by unique name";
 
                 key "name";
+
+                leaf name {
+                    type string;
+                    description "Unique name for the scheduled configuration";
+                }
 
                 leaf time_range {
                     mandatory true;
                     type string {
-                        length 1..255;
+                        length "1..255";
                     }
-                    description "time range this configuration is bound to";
+                    description "Time range this configuration is bound to";
                 }
 
                 leaf configuration {
                     type string;
-                    description "configuration to be applied to APPL_DB in JSON format";
+                    description "Configuration to be applied to APPL_DB in JSON format";
                 }
             } /* end of list SCHEDULED_CONFIGURATIONS_LIST */
             
@@ -41,4 +46,3 @@ module sonic-scheduled-configurations {
     } /* end of top level container */
     
 } /* end of module sonic-scheduled-configurations */
-

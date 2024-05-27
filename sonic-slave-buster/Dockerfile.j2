@@ -673,5 +673,3 @@ ARG bazelisk_url=https://github.com/bazelbuild/bazelisk/releases/latest/download
 RUN curl -fsSL -o /usr/local/bin/bazel ${bazelisk_url} && chmod 755 /usr/local/bin/bazel
 {% endif -%}
 
-
-RUN apt-get install libcurl3-gnutls:$arch -y

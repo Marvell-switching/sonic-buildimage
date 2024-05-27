@@ -19,8 +19,10 @@ endif
 	gbp dch --ignore-branch --new-version=$(FRR_VERSION)-sonic-$(FRR_SUBVERSION) --dch-opt="--force-bad-version" --commit --git-author
 
 ifeq ($(CROSS_BUILD_ENVIRON), y)
-	sed -i 's/$$(PYTHON) $$(PYSPHINX) -q -b html/\/usr\/bin\/python3 $$(PYSPHINX) -q -b html/' doc/subdir.am
+	echo -e '\noverride_dh_sphinxdoc:\n\tdh_sphinxdoc -O-Bbuild -O--builddirectory=build -X underscore.js -X jquery.js' >> debian/rules
+	@echo CFLAGS="-I $$CROSS_PERL_CORE_PATH" dpkg-buildpackage -rfakeroot -b -d -us -uc -a$(CONFIGURED_ARCH) -Pcross,nocheck,pkg.frr.nortrlib -j$(SONIC_CONFIG_MAKE_JOBS) --admindir $(SONIC_DPKG_ADMINDIR)
 	CFLAGS="-I $$CROSS_PERL_CORE_PATH" dpkg-buildpackage -rfakeroot -b -d -us -uc -a$(CONFIGURED_ARCH) -Pcross,nocheck,pkg.frr.nortrlib -j$(SONIC_CONFIG_MAKE_JOBS) --admindir $(SONIC_DPKG_ADMINDIR)
+	git checkout debian/rules
 else
 	dpkg-buildpackage -rfakeroot -b -us -uc -Ppkg.frr.nortrlib -j$(SONIC_CONFIG_MAKE_JOBS) --admindir $(SONIC_DPKG_ADMINDIR)
 endif

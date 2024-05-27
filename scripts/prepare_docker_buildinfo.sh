@@ -35,8 +35,8 @@ if [ -z "$DISTRO" ]; then
     DOCKER_BASE_IMAGE=$(grep "^FROM" $DOCKERFILE | head -n 1 | awk '{print $2}')
     DISTRO=$(docker run --rm --entrypoint "" $DOCKER_BASE_IMAGE cat /etc/os-release | grep VERSION_CODENAME | cut -d= -f2)
     if [ -z "$DISTRO" ]; then
-        DISTRO=$(docker run --rm --entrypoint "" $DOCKER_BASE_IMAGE cat /etc/apt/sources.list | grep deb.debian.org | awk '{print $3}')
-        [ -z "$DISTRO" ] && DISTRO=jessie
+        DISTRO=$(docker run --rm --entrypoint "" $DOCKER_BASE_IMAGE cat /etc/apt/sources.list | grep deb.debian.org | awk '{if ($0 ~ /arch/) print $4; else print $3}' | head -n 1)
+	[ -z "$DISTRO" ] && DISTRO=bullseye
     fi
 fi
 

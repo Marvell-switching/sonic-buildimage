@@ -27,7 +27,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Configure data sources for apt/dpkg
 COPY ["dpkg_01_drop", "/etc/dpkg/dpkg.cfg.d/01_drop"]
+{% if CONFIGURED_ARCH == "arm64" and (MULTIARCH_QEMU_ENVIRON == "y" or CROSS_BUILD_ENVIRON == "y") %}
+COPY ["trusted.gpg.d/*", "/etc/apt/trusted.gpg.d/"]
+COPY ["sources.list.amd64", "/etc/apt/sources.list"]
+COPY ["sources.list.{{ CONFIGURED_ARCH }}", "/tmp/"]
+RUN cat /tmp/"sources.list.{{ CONFIGURED_ARCH }}" >> "/etc/apt/sources.list"  && rm -f /tmp/"sources.list.{{ CONFIGURED_ARCH }}"
+{% else %}
 COPY ["sources.list.{{ CONFIGURED_ARCH }}", "/etc/apt/sources.list"]
+{% endif %}
 COPY ["no_install_recommend_suggest", "/etc/apt/apt.conf.d"]
 COPY ["no-check-valid-until", "/etc/apt/apt.conf.d"]
 COPY ["apt-multiple-retries", "/etc/apt/apt.conf.d"]

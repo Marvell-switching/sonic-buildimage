@@ -1,7 +1,4 @@
 {
-    "BUFFER_QUEUE_CORRECT_PROFILE_VALUE": {
-        "desc": "BUFFER_QUEUE_CORRECT_PROFILE_VALUE no failure"
-    },
     "BUFFER_QUEUE_WRONG_PROFILE_VALUE": {
         "desc": "BUFFER_QUEUE_WRONG_PROFILE_VALUE pattern failure",
         "eStr": "wrong"

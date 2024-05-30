@@ -93,7 +93,6 @@ module sonic-buffer-queue {
                     type leafref {
                         path "/prt:sonic-port/prt:PORT/prt:PORT_LIST/prt:name";
                     }
-                    description "port name.";
                 }
 
                 leaf qindex {

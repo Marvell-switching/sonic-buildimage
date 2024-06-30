@@ -36,16 +36,21 @@ module sonic-timerange {
                 }
 
                 leaf end {
+                    mandatory true;
                     type string {
                         length "1..255";
                     }
                     description "End time for time range";
                 }
 
-                leaf runOnce {
-                    type boolean;
-                    default "false";
-                    description "Indicates whether the time range should trigger only once.";
+                leaf start_year {
+                    type integer;
+                    description "Indicates what year this time range will begin running";
+                }
+
+                leaf end_year {
+                    type integer;
+                    description "Indicates what year this time range will end";
                 }
             } /* end of list TIME_RANGE_LIST */
             

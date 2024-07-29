@@ -2309,27 +2309,13 @@ void update_vlan_if_mac_on_standby(struct LocalInterface* lif_vlan, int dir)
 
     memset(macaddr, 0, 64);
     memset(system_mac, 0, ETHER_ADDR_LEN);
-    if (lif_vlan->is_l3_proto_enabled == false)
-    {
-        if (memcmp(MLACP(csm).remote_system.system_id, null_mac, ETHER_ADDR_LEN) == 0) {
-            ICCPD_LOG_DEBUG(__FUNCTION__, " remote system_id not initialised.");
-            return;
-        }
-        memcpy(system_mac, MLACP(csm).remote_system.system_id, ETHER_ADDR_LEN);
-        SET_MAC_STR(macaddr, MLACP(csm).remote_system.system_id);
-    } else {
-        if (memcmp(MLACP(csm).system_id, null_mac, ETHER_ADDR_LEN) == 0){
-            ICCPD_LOG_NOTICE(__FUNCTION__, " system_id not initialised.");
-            return;
-        }
-        memcpy(system_mac, MLACP(csm).system_id, ETHER_ADDR_LEN);
-        SET_MAC_STR(macaddr, MLACP(csm).system_id);
-    }
 
-    if (memcmp(system_mac, null_mac, ETHER_ADDR_LEN) == 0) {
-        ICCPD_LOG_NOTICE(__FUNCTION__, " system_id not present.");
+    if (memcmp(MLACP(csm).remote_system.system_id, null_mac, ETHER_ADDR_LEN) == 0) {
+        ICCPD_LOG_DEBUG(__FUNCTION__, " remote system_id not initialised.");
         return;
     }
+    memcpy(system_mac, MLACP(csm).remote_system.system_id, ETHER_ADDR_LEN);
+    SET_MAC_STR(macaddr, MLACP(csm).remote_system.system_id);
 
     ICCPD_LOG_DEBUG(__FUNCTION__,
             "%s Change the system-id of %s from [%02X:%02X:%02X:%02X:%02X:%02X] to [%02X:%02X:%02X:%02X:%02X:%02X], dir %d",

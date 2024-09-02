@@ -36,8 +36,16 @@ module sonic-scheduled-configurations {
                 }
 
                 leaf configuration {
+                    mandatory true;
                     type string;
-                    description "Configuration to be applied to APPL_DB in JSON format";
+                    description "Configuration to be applied to CONFIG_DB in JSON format";
+                }
+
+                leaf deactivation_configuration {
+                    mandatory true;
+                    type string;
+                    description "A configuration to be applied at deactivation, or the string 'remove' to simply remove the configuration at deactivation";
+
                 }
             } /* end of list SCHEDULED_CONFIGURATIONS_LIST */
             

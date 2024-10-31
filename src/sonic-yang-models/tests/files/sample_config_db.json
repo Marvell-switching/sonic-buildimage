@@ -2684,7 +2684,21 @@
                 "motd": "Some message of the day",
                 "logout": "Some logout message"
             }
-        }
+		},
+		"ARS_PROFILE": {
+			"per_flowlet": {
+				"assign_mode": "per_flowlet_quality",
+				"match_mode": "nexthop-based"
+			}
+		},
+		"ARS_NHG_MEMBER": {
+			"192.168.0.101": {
+				"profile_name": "per_flowlet"
+			}
+        },
+		"ARS_MIN_PATH": {
+			"per_flowlet|Ethernet10": {}
+		}
     },
     "SAMPLE_CONFIG_DB_UNKNOWN": {
         "UNKNOWN_TABLE": {

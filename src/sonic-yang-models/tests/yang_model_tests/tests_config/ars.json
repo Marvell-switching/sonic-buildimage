@@ -1,0 +1,192 @@
+{
+    "ARS_TEST": {
+        "sonic-port:sonic-port": {
+            "sonic-port:PORT": {
+                "PORT_LIST": [
+                    {
+                        "admin_status": "up",
+                        "alias": "Ethernet1",
+                        "description": "Ethernet1",
+                        "lanes": "65",
+                        "mtu": "9000",
+                        "name": "Ethernet1",
+                        "tpid": "0x8100",
+                        "speed": "25000"
+                    },
+                    {
+                        "admin_status": "up",
+                        "alias": "Ethernet2",
+                        "description": "Ethernet2",
+                        "lanes": "65",
+                        "mtu": "9000",
+                        "name": "Ethernet2",
+                        "tpid": "0x8100",
+                        "speed": "25000"
+                    },
+                    {
+                        "admin_status": "up",
+                        "alias": "Ethernet3",
+                        "description": "Ethernet3",
+                        "lanes": "65",
+                        "mtu": "9000",
+                        "name": "Ethernet3",
+                        "tpid": "0x8100",
+                        "speed": "25000"
+                    }
+                ]
+            }
+        },
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "name": "per_flowlet",
+                        "assign_mode": "per_flowlet_quality",
+                        "match_mode": "nexthop-based"
+                    }
+                ]
+            },
+			"sonic-ars:ARS_MIN_PATH": {
+			    "ARS_MIN_PATH_LIST": [
+				    {
+					    "profile_name": "per_flowlet",
+						"if_name": "Ethernet1"
+					},
+				    {
+					    "profile_name": "per_flowlet",
+						"if_name": "Ethernet2"
+					},
+				    {
+					    "profile_name": "per_flowlet",
+						"if_name": "Ethernet3"
+					}
+				]
+			}
+        }
+    },
+    "ARS_PREFIX_TEST": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "name": "per_packet",
+                        "assign_mode": "per_packet",
+                        "match_mode": "route-based"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_NHG_PREFIX": {
+                "ARS_NHG_PREFIX_LIST": [
+                    {
+                        "ip_prefix": "10.0.0.0/24",
+                        "profile_name": "per_packet"
+                    },
+                    {
+                        "ip_prefix": "10.1.0.0/24",
+                        "profile_name": "per_packet"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_MEMBER_TEST": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "name": "per_flowlet",
+                        "assign_mode": "per_flowlet_quality",
+                        "match_mode": "nexthop-based"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_NHG_MEMBER": {
+                "ARS_NHG_MEMBER_LIST": [
+                    {
+                        "next_hop_ip": "10.0.0.1",
+                        "profile_name": "per_flowlet"
+                    },
+                    {
+                        "next_hop_ip": "10.0.0.2",
+                        "profile_name": "per_flowlet"
+                    },
+                    {
+                        "next_hop_ip": "10.1.0.1",
+                        "profile_name": "per_flowlet"
+                    },
+                    {
+                        "next_hop_ip": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+                        "profile_name": "per_flowlet"
+                    },
+                    {
+                        "next_hop_ip": "2001:db8::1",
+                        "profile_name": "per_flowlet"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_TEST_TOO_MANY_PROFILES": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "name": "group1",
+                        "assign_mode": "per_flowlet_quality",
+                        "match_mode": "nexthop-based"
+                    },
+                    {
+                        "name": "group2",
+                        "assign_mode": "per_packet",
+                        "match_mode": "route-based"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_MEMBER_TEST_INVALID_IP": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_NHG_MEMBER": {
+                "ARS_NHG_MEMBER_LIST": [
+                    {
+                        "next_hop_ip": "invalid_ip",
+                        "profile_name": "per_flowlet_quality"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_PREFIX_TEST_INVALID_PREFIX": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_NHG_PREFIX": {
+                "ARS_NHG_PREFIX_LIST": [
+                    {
+                        "ip_prefix": "invalid_prefix",
+                        "profile_name": "per_flowlet_quality"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_MEMBER_TEST_INVALID_LINK": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "name": "per_flowlet",
+                        "assign_mode": "per_flowlet_quality",
+                        "match_mode": "route-based"
+                    }
+                ]
+            },
+			"sonic-ars:ARS_MIN_PATH": {
+			    "ARS_MIN_PATH_LIST": [
+				    {
+					    "profile_name": "per_flowlet",
+						"if_name": "invalid_link"
+					}
+				]
+			}
+        }
+    }
+}

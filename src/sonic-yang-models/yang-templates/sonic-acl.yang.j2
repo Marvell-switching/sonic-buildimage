@@ -283,11 +283,117 @@ module sonic-acl {
 					}
 				}
 
+				leaf TUNNEL_TERM {
+					description "Tunnel Termination Flag";
+					type boolean;
+				}
+
 				leaf DISABLE_ARS_FORWARDING {
 					description "Disable ARS forwarding on matching packets";
 					type boolean;
 					default false;
 				}
+        }
+		/* end of container ACL_RULE */
+
+		container ACL_TABLE_TYPE {
+			list ACL_TABLE_TYPE_LIST {
+				key "ACL_TABLE_TYPE_NAME";
+
+				leaf ACL_TABLE_TYPE_NAME {
+					type string;
+				}
+
+				leaf-list MATCHES {
+					type string;
+					min-elements 1;
+				}
+
+				leaf-list ACTIONS {
+					type string;
+					default "";
+				}
+
+				leaf-list BIND_POINTS {
+					type enumeration {
+						enum PORT;
+						enum PORTCHANNEL;
+					}
+					min-elements 1;
+				}
+			}
+		}
+
+		container ACL_TABLE {
+
+			description "ACL_TABLE part of config_db.json";
+
+			list ACL_TABLE_LIST {
+
+				key "ACL_TABLE_NAME";
+
+				leaf ACL_TABLE_NAME {
+					type string;
+				}
+
+				leaf policy_desc {
+					type string {
+						length 1..255;
+					}
+				}
+
+				leaf type {
+					mandatory true;
+					type union {
+						type leafref {
+							path "/acl:sonic-acl/acl:ACL_TABLE_TYPE/acl:ACL_TABLE_TYPE_LIST/acl:ACL_TABLE_TYPE_NAME";
+						}
+						type stypes:acl_table_type;
+					}
+				}
+
+				leaf stage {
+					type string {
+						pattern "ingress|egress|INGRESS|EGRESS";
+					}
+					default "INGRESS";
+				}
+
+				leaf-list services {
+					type string;
+				}
+
+				/* Validating 'services' exist if ACL type is 'CTRLPLANE' */
+				must "(not(type = 'CTRLPLANE')) or (boolean(services))";
+
+				leaf-list ports {
+					/* union of leafref is allowed in YANG 1.1 */
+					type union {
+						type leafref {
+							path /port:sonic-port/port:PORT/port:PORT_LIST/port:name;
+						}
+						type leafref {
+							path /lag:sonic-portchannel/lag:PORTCHANNEL/lag:PORTCHANNEL_LIST/lag:name;
+						}
+						type string {
+							pattern "";
+						}
+					}
+					/* Today in SONiC, we do not delete the list once
+					 * created, instead we set to empty list. Due to that
+					 * below default values are needed.
+					 */
+					default "";
+				}
+			}
+			/* end of ACL_TABLE_LIST */
+		}
+        /* end of container ACL_TABLE */
+	}
+    /* end of container sonic-acl */
+}
+/* end of module sonic-acl */
+
 			}
 			/* end of ACL_RULE_LIST */
 		}

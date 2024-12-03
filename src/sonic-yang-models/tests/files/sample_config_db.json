@@ -2783,6 +2783,12 @@
                 "logout": "Some logout message"
             }
         },
+        "MEMORY_STATISTICS": {
+            "memory_statistics": {
+                "enabled": "false",
+                "sampling_interval": "5",
+                "retention_period": "15"
+            }
         "ARS_PROFILE": {
             "global": {
                 "algorithm": "ewma",

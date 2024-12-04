@@ -44,12 +44,12 @@ module sonic-timerange {
                 }
 
                 leaf start_year {
-                    type integer;
+                    type uint16;
                     description "Indicates what year this time range will begin running";
                 }
 
                 leaf end_year {
-                    type integer;
+                    type uint16;
                     description "Indicates what year this time range will end";
                 }
             } /* end of list TIME_RANGE_LIST */

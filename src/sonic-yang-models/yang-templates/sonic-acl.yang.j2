@@ -37,6 +37,10 @@ module sonic-acl {
 		prefix sms;
 	}
 
+	import sonic-policer {
+		prefix policer;
+	}
+
 	description "ACL YANG Module for SONiC OS";
 
 	revision 2019-07-01 {
@@ -66,19 +70,45 @@ module sonic-acl {
 				}
 
 				leaf PACKET_ACTION {
-					type stypes:packet_action;
+					type enumeration {
+						enum DROP;
+						enum ACCEPT;
+						enum FORWARD;
+					}
 				}
 
 				/* Validating 'PACKET_ACTION' exist if ACL type is 'CTRLPLANE' */
 				must "(not(../../ACL_TABLE/ACL_TABLE_LIST[ACL_TABLE_NAME=current()/ACL_TABLE_NAME]/type = 'CTRLPLANE')) or (boolean(PACKET_ACTION))";
 
+				leaf PACKET_ACTION_POLICER {
+					type stypes:boolean_type;
+				}
+
+				leaf PACKET_ACTION_MIRROR {
+					type stypes:boolean_type;
+				}
+
+				leaf PACKET_ACTION_DO_NOT_NAT {
+					type stypes:boolean_type;
+				}
+
+				leaf POLICER_ACTION {
+                    when "../PACKET_ACTION_POLICER";
+                    type leafref {
+                    	path "/policer:sonic-policer/policer:POLICER/policer:POLICER_LIST/policer:name";
+                    }
+                    description "Policer action applied when PACKET_ACTION_POLICER is True.";
+                }
+
 				leaf MIRROR_INGRESS_ACTION {
+					when "../PACKET_ACTION_MIRROR";
 					type leafref {
 						path "/sms:sonic-mirror-session/sms:MIRROR_SESSION/sms:MIRROR_SESSION_LIST/sms:name";
 					}
 				}
 
 				leaf MIRROR_EGRESS_ACTION {
+					when "../PACKET_ACTION_MIRROR";
 					type leafref {
 						path "/sms:sonic-mirror-session/sms:MIRROR_SESSION/sms:MIRROR_SESSION_LIST/sms:name";
 					}
@@ -330,6 +360,13 @@ module sonic-acl {
 				leaf policy_desc {
 					type string {
 						length 1..255;
+					}
+				}
+
+				leaf-list EXT_ACTIONS {
+					description "Additional action list for ACL table. If no action is chosen, the default is nothing.";
+					type enumeration {
+						enum POLICER;
 					}
 				}
 

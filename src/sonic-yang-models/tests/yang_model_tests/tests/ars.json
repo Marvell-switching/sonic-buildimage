@@ -1,36 +1,41 @@
 {
     "ARS_TEST": {
-        "desc": "MIN_PATH config in ARS."
-    },
-    "ARS_PREFIX_TEST": {
-        "desc": "Route prefix configuration in ARS_NHG_PREFIX_LIST table."
-    },
-    "ARS_MEMBER_TEST": {
-        "desc": "Next-hop member configuration in ARS_NHG_MEMBER_LIST table."
+        "desc": "Sample config in ARS."
     },
     "ARS_TEST_TOO_MANY_PROFILES": {
         "desc": "ARS configuration with more than one profile ARS_PROFILE_LIST table.",
         "eStr": "Too many ARS_PROFILE_LIST elements."
     },
-    "ARS_MEMBER_TEST_INVALID_IP": {
-        "desc": "Next-hop member configuration with invalid IP value in ARS_NHG_MEMBER_LIST table.",
+    "ARS_TEST_OBJECT_INVALID_MODE": {
+        "desc": "Object configuration with invalid mode value in ARS_OBJECT_LIST table.",
         "eStrKey": "InvalidValue",
         "eStr": [
-            "next_hop_ip"
+            "assign_mode"
         ]
     },
+    "ARS_TEST_BANDS_ILLEGAL_INDEX": {
+        "desc": "Quantization band configuration with invalid index in ARS_QUANTIZATION_BANDS_LIST table.",
+        "eStr": "Too many ARS_QUANTIZATION_BANDS_LIST elements."
+    },
     "ARS_PREFIX_TEST_INVALID_PREFIX": {
-        "desc": "Prefix configuration with invalid prefix value in ARS_NHG_PREFIX_LIST table.",
+        "desc": "Prefix configuration with invalid value in ARS_NEXTHOP_GROUP_LIST table.",
         "eStrKey": "InvalidValue",
         "eStr": [
             "ip_prefix"
         ]
     },
-    "ARS_MEMBER_TEST_INVALID_LINK": {
-        "desc": "Next-hop member configuration with invalid link value in ARS_MIN_PATH_INTERFACE_LIST table.",
+    "ARS_INTERFACE_TEST_INVALID_LINK": {
+        "desc": "Interface configuration with invalid name in ARS_INTERFACE_LIST table.",
         "eStrKey": "InvalidValue",
         "eStr": [
             "if_name"
         ]
+    },
+    "ARS_TEST_LAG_INVALID_NAME": {
+        "desc": "LAG with invalid name in ARS_PORTCHANNEL_LIST table.",
+        "eStrKey": "LeafRef",
+        "eStr": [
+           "PortChannel0001"
+	]
     }
 }

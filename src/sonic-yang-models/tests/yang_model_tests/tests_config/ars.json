@@ -36,91 +36,101 @@
                 ]
             }
         },
-        "sonic-ars:sonic-ars": {
-            "sonic-ars:ARS_PROFILE": {
-                "ARS_PROFILE_LIST": [
+        "sonic-portchannel:sonic-portchannel": {
+            "sonic-portchannel:PORTCHANNEL": {
+                "PORTCHANNEL_LIST": [
                     {
-                        "name": "per_flowlet",
-                        "assign_mode": "per_flowlet_quality",
-                        "match_mode": "nexthop-based"
-                    }
-                ]
-            },
-			"sonic-ars:ARS_MIN_PATH": {
-			    "ARS_MIN_PATH_LIST": [
-				    {
-					    "profile_name": "per_flowlet",
-						"if_name": "Ethernet1"
-					},
-				    {
-					    "profile_name": "per_flowlet",
-						"if_name": "Ethernet2"
-					},
-				    {
-					    "profile_name": "per_flowlet",
-						"if_name": "Ethernet3"
-					}
-				]
-			}
-        }
-    },
-    "ARS_PREFIX_TEST": {
-        "sonic-ars:sonic-ars": {
-            "sonic-ars:ARS_PROFILE": {
-                "ARS_PROFILE_LIST": [
-                    {
-                        "name": "per_packet",
-                        "assign_mode": "per_packet",
-                        "match_mode": "route-based"
-                    }
-                ]
-            },
-            "sonic-ars:ARS_NHG_PREFIX": {
-                "ARS_NHG_PREFIX_LIST": [
-                    {
-                        "ip_prefix": "10.0.0.0/24",
-                        "profile_name": "per_packet"
+                        "name": "PortChannel0001",
+                        "admin_status": "up"
                     },
                     {
-                        "ip_prefix": "10.1.0.0/24",
-                        "profile_name": "per_packet"
+                        "name": "PortChannel0002",
+                        "admin_status": "up"
+                    }
+                ]
+			},
+            "sonic-portchannel:PORTCHANNEL_MEMBER": {
+                "PORTCHANNEL_MEMBER_LIST": [
+                    {
+                        "name": "PortChannel0001",
+                        "port": "Ethernet1"
+                    },
+                    {
+                        "name": "PortChannel0001",
+                        "port": "Ethernet2"
+                    },
+                    {
+                        "name": "PortChannel0002",
+                        "port": "Ethernet3"
                     }
                 ]
             }
-        }
-    },
-    "ARS_MEMBER_TEST": {
+        },
         "sonic-ars:sonic-ars": {
             "sonic-ars:ARS_PROFILE": {
                 "ARS_PROFILE_LIST": [
                     {
-                        "name": "per_flowlet",
-                        "assign_mode": "per_flowlet_quality",
-                        "match_mode": "nexthop-based"
+                        "profile_name": "global",
+						"algorithm": "ewma",
+                        "max_flows": "2048"
                     }
                 ]
             },
-            "sonic-ars:ARS_NHG_MEMBER": {
-                "ARS_NHG_MEMBER_LIST": [
+            "sonic-ars:ARS_OBJECT": {
+                "ARS_OBJECT_LIST": [
                     {
-                        "next_hop_ip": "10.0.0.1",
-                        "profile_name": "per_flowlet"
+                        "profile_name": "global",
+                        "ars_name": "per_flowlet",
+                        "assign_mode": "per_flowlet_quality",
+                        "max_flows": "512"
                     },
                     {
-                        "next_hop_ip": "10.0.0.2",
-                        "profile_name": "per_flowlet"
+                        "profile_name": "global",
+                        "ars_name": "per_packet",
+                        "assign_mode": "per_packet"
+                    }
+                ]
+            },
+			"sonic-ars:ARS_QUANTIZATION_BANDS": {
+			    "ARS_QUANTIZATION_BANDS_LIST": [
+					{
+						"profile_name": "global",
+						"band_index": "1",
+						"min_value": "0",
+						"max_value": "200"
+					}
+				]
+			},
+			"sonic-ars:ARS_INTERFACE": {
+			    "ARS_INTERFACE_LIST": [
+					{
+						"if_name": "Ethernet1"
+					},
+					{
+						"if_name": "PortChannel0002"
+					}
+				]
+			},
+            "sonic-ars:ARS_NEXTHOP_GROUP": {
+                "ARS_NEXTHOP_GROUP_LIST": [
+                    {
+                        "ip_prefix": "10.0.0.0/24",
+						"vrf_name": "default",
+                        "ars_name": "per_packet"
                     },
                     {
-                        "next_hop_ip": "10.1.0.1",
-                        "profile_name": "per_flowlet"
-                    },
+                        "ip_prefix": "10.1.0.0/24",
+						"vrf_name": "default",
+                        "ars_name": "per_flowlet"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_PORTCHANNEL": {
+                "ARS_PORTCHANNEL_LIST": [
                     {
-                        "next_hop_ip": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-                        "profile_name": "per_flowlet"
-                    },
-                    {
-                        "next_hop_ip": "2001:db8::1",
-                        "profile_name": "per_flowlet"
+                        "ars_name": "per_flowlet",
+                        "if_name": "PortChannel0001",
+						"alternative_path_members": ["Ethernet2"]
                     }
                 ]
             }
@@ -131,26 +141,93 @@
             "sonic-ars:ARS_PROFILE": {
                 "ARS_PROFILE_LIST": [
                     {
-                        "name": "group1",
-                        "assign_mode": "per_flowlet_quality",
-                        "match_mode": "nexthop-based"
+                        "profile_name": "group1",
+                        "algorithm": "ewma"
                     },
                     {
-                        "name": "group2",
-                        "assign_mode": "per_packet",
-                        "match_mode": "route-based"
+                        "profile_name": "group2",
+                        "sampling_interval": "10"
                     }
                 ]
             }
         }
     },
-    "ARS_MEMBER_TEST_INVALID_IP": {
+    "ARS_TEST_OBJECT_INVALID_MODE": {
         "sonic-ars:sonic-ars": {
-            "sonic-ars:ARS_NHG_MEMBER": {
-                "ARS_NHG_MEMBER_LIST": [
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
                     {
-                        "next_hop_ip": "invalid_ip",
-                        "profile_name": "per_flowlet_quality"
+                        "profile_name": "group1",
+                        "algorithm": "ewma"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_OBJECT": {
+                "ARS_OBJECT_LIST": [
+                    {
+                        "profile_name": "group1",
+                        "assign_mode": "illegal_mode"
+                    }
+                ]
+            }
+        }
+    },
+    "ARS_TEST_BANDS_ILLEGAL_INDEX": {
+        "sonic-ars:sonic-ars": {
+            "sonic-ars:ARS_PROFILE": {
+                "ARS_PROFILE_LIST": [
+                    {
+                        "profile_name": "group1",
+                        "algorithm": "ewma"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_QUANTIZATION_BANDS": {
+                "ARS_QUANTIZATION_BANDS_LIST": [
+                    {
+                        "profile_name": "group1",
+                        "band_index": "0",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "1",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "2",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "3",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "4",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "5",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "6",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "7",
+						"min_value": "0"
+                    },
+                    {
+                        "profile_name": "group1",
+                        "band_index": "8",
+						"min_value": "0"
                     }
                 ]
             }
@@ -158,35 +235,56 @@
     },
     "ARS_PREFIX_TEST_INVALID_PREFIX": {
         "sonic-ars:sonic-ars": {
-            "sonic-ars:ARS_NHG_PREFIX": {
-                "ARS_NHG_PREFIX_LIST": [
+            "sonic-ars:ARS_NEXTHOP_GROUP": {
+                "ARS_NEXTHOP_GROUP_LIST": [
                     {
                         "ip_prefix": "invalid_prefix",
-                        "profile_name": "per_flowlet_quality"
+						"vrf_name": "default",
+                        "ars_name": "per_flowlet_quality"
                     }
                 ]
             }
         }
     },
-    "ARS_MEMBER_TEST_INVALID_LINK": {
+    "ARS_INTERFACE_TEST_INVALID_LINK": {
+        "sonic-ars:sonic-ars": {
+			"sonic-ars:ARS_INTERFACE": {
+			    "ARS_INTERFACE_LIST": [
+					{
+						"if_name": "EthernetXXX"
+					}
+				]
+			}
+        }
+    },
+    "ARS_TEST_LAG_INVALID_NAME": {
         "sonic-ars:sonic-ars": {
             "sonic-ars:ARS_PROFILE": {
                 "ARS_PROFILE_LIST": [
                     {
-                        "name": "per_flowlet",
-                        "assign_mode": "per_flowlet_quality",
-                        "match_mode": "route-based"
+                        "profile_name": "group1",
+                        "algorithm": "ewma"
                     }
                 ]
             },
-			"sonic-ars:ARS_MIN_PATH": {
-			    "ARS_MIN_PATH_LIST": [
-				    {
-					    "profile_name": "per_flowlet",
-						"if_name": "invalid_link"
-					}
-				]
-			}
+            "sonic-ars:ARS_OBJECT": {
+                "ARS_OBJECT_LIST": [
+                    {
+                        "profile_name": "group1",
+                        "ars_name": "per_flowlet",
+                        "assign_mode": "per_flowlet_quality",
+                        "max_flows": "512"
+                    }
+                ]
+            },
+            "sonic-ars:ARS_PORTCHANNEL": {
+                "ARS_PORTCHANNEL_LIST": [
+                    {
+                        "ars_name": "per_flowlet",
+                        "if_name": "PortChannel0001"
+                    }
+                ]
+            }
         }
     }
 }

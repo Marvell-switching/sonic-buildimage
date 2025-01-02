@@ -2759,22 +2759,58 @@
                 "motd": "Some message of the day",
                 "logout": "Some logout message"
             }
-		},
-		"ARS_PROFILE": {
-			"per_flowlet": {
-				"assign_mode": "per_flowlet_quality",
-				"match_mode": "nexthop-based"
-			}
-		},
-		"ARS_NHG_MEMBER": {
-			"192.168.0.101": {
-				"profile_name": "per_flowlet"
-			}
         },
-		"ARS_MIN_PATH": {
-			"per_flowlet|Ethernet10": {}
-		}
-    },
+        "ARS_PROFILE": {
+            "global": {
+                "algorithm": "ewma",
+                "max_flows": "2048",
+                "sampling_interval": "10",
+                "past_load_min_value": "0",
+                "past_load_max_value": "10",
+                "past_load_weight": "6",
+                "future_load_min_value": "10",
+                "future_load_max_value": "50",
+                "future_load_weight": "10",
+                "current_load_min_value": "20",
+                "current_load_max_value": "30",
+                "ipv4_enable": "true",
+                "ipv6_enable": "true"
+            }
+        },
+        "ARS_QUANTIZATION_BANDS": {
+            "global|0": {
+                "min_value": "0",
+                "max_value": "25"
+            },
+            "global|1": {
+                "min_value": "25",
+                "max_value": "50"
+            }
+        },
+        "ARS_OBJECT": {
+            "global|per_flowlet": {
+                "assign_mode": "per_flowlet_quality",
+                "max_flows": "512",
+                "primary_path_threshold": "5",
+                "alternative_path_cost": "15"
+            }
+        },
+        "ARS_NEXTHOP_GROUP": {
+            "192.168.0.0/32|default": {
+                "ars_name":"per_flowlet",
+                "alternative_path_members":[1.1.1.1, 2.2.2.2]
+            }
+        },
+        "ARS_PORTCHANNEL": {
+            "PortChannel0003": {
+                "ars_name":"per_flowlet",
+                "alternative_path_members":[Ethernet5, Ethernet6]
+            }
+        },
+        "ARS_INTERFACE": {
+            "Ethernet10": {},
+            "PortChannel0003":{}
+        },
     "SAMPLE_CONFIG_DB_UNKNOWN": {
         "UNKNOWN_TABLE": {
             "Error": "This Table is for testing, This Table does not have YANG models."

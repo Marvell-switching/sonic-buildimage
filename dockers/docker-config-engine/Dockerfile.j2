@@ -1,4 +1,9 @@
+{% from "dockers/dockerfile-macros.j2" import install_debian_packages, install_python_wheels, copy_files %}
+{% if squash_base_debian_image == "y" %}
+FROM docker-base-{{DOCKER_USERNAME}}:{{DOCKER_USERTAG}} as intermediate
+{% else %}
 FROM docker-base-{{DOCKER_USERNAME}}:{{DOCKER_USERTAG}}
+{% endif %}
 
 ## Make apt-get non-interactive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -17,29 +22,29 @@ COPY \
 debs/{{ deb }}{{' '}}
 {%- endfor -%}
 debs/
-{%- endif -%}
+{%- endif %}
 
 {% if docker_config_engine_debs.strip() %}
 RUN dpkg -i \
 {% for deb in docker_config_engine_debs.split(' ') -%}
 debs/{{ deb }}{{' '}}
 {%- endfor %}
-{%- endif -%}
+{%- endif %}
 
 {% if docker_config_engine_whls.strip() %}
 COPY \
 {% for whl in docker_config_engine_whls.split(' ') -%}
 python-wheels/{{ whl }}{{' '}}
-{%- endfor -%}
+{%- endfor %}
 python-wheels/
-{%- endif -%}
+{%- endif %}
 
 {% if docker_config_engine_whls.strip() %}
 RUN pip install \
 {% for whl in docker_config_engine_whls.split(' ') -%}
 python-wheels/{{ whl }}{{' '}}
 {%- endfor %}
-{%- endif -%}
+{%- endif %}
 
 # Copy files
 COPY ["files/swss_vars.j2", "/usr/share/sonic/templates/"]
@@ -47,3 +52,9 @@ COPY ["files/swss_vars.j2", "/usr/share/sonic/templates/"]
 ## Clean up
 RUN apt-get purge -y build-essential python-dev; apt-get clean -y; apt-get autoclean -y; apt-get autoremove -y
 RUN rm -rf /debs /python-wheels
+
+{% if squash_base_debian_image == "y" %}
+# Squash. Only keep the files that remain.
+FROM scratch
+COPY --from=intermediate / /
+{% endif %}

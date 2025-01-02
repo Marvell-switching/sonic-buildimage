@@ -115,7 +115,13 @@
             "id" : 14,
             "separator": ":",
             "instance" : "redis"
-        }
+        },
+        "DYNAMIC_DB" : {
+            "id" : 21,
+            "separator": "|",
+            "instance" : "redis"
+        }	
+	
 {% if DATABASE_TYPE is defined and DATABASE_TYPE == "dpudb" %}
         ,
         "DPU_APPL_DB" : {

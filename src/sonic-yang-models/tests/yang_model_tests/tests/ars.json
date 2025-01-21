@@ -15,7 +15,10 @@
     },
     "ARS_TEST_BANDS_ILLEGAL_INDEX": {
         "desc": "Quantization band configuration with invalid index in ARS_QUANTIZATION_BANDS_LIST table.",
-        "eStr": "Too many ARS_QUANTIZATION_BANDS_LIST elements."
+        "eStrKey": "Range",
+        "eStr": [
+		    "Value \"8\" does not satisfy the constraint"
+		]
     },
     "ARS_PREFIX_TEST_INVALID_PREFIX": {
         "desc": "Prefix configuration with invalid value in ARS_NEXTHOP_GROUP_LIST table.",
@@ -36,6 +39,6 @@
         "eStrKey": "LeafRef",
         "eStr": [
            "PortChannel0001"
-	]
+	    ]
     }
 }

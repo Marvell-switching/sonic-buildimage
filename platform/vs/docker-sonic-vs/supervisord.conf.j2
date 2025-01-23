@@ -405,3 +405,37 @@ stderr_syslog=true
 {% if ENABLE_ASAN == "y" %}
 environment=ASAN_OPTIONS="log_path=/var/log/asan/fabricmgrd-asan.log{{ asan_extra_options }}"
 {% endif %}
+
+[program:timerangemgrd]
+command=/usr/bin/timerangemgrd
+priority=27
+autostart=false
+autorestart=false
+stdout_logfile=syslog
+stderr_logfile=syslog
+{% if ENABLE_ASAN == "y" %}
+environment=ASAN_OPTIONS="log_path=/var/log/asan/timerangemgrd-asan.log{{ asan_extra_options }}"
+{% endif %}
+
+[program:scheduledconfigmgrd]
+command=/usr/bin/scheduledconfigmgrd
+priority=27
+autostart=false
+autorestart=false
+stdout_logfile=syslog
+stderr_logfile=syslog
+{% if ENABLE_ASAN == "y" %}
+environment=ASAN_OPTIONS="log_path=/var/log/asan/scheduledconfigmgrd-asan.log{{ asan_extra_options }}"
+{% endif %}
+
+
+[program:cron]
+command=/usr/sbin/cron -f -L 15
+priority=27
+autostart=false
+autorestart=false
+stdout_logfile=syslog
+stderr_logfile=syslog
+{% if ENABLE_ASAN == "y" %}
+environment=ASAN_OPTIONS="log_path=/var/log/asan/cron-asan.log{{ asan_extra_options }}"
+{% endif %}

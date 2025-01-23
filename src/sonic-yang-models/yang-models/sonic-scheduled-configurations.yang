@@ -1,0 +1,56 @@
+module sonic-scheduled-configurations {
+
+    yang-version 1.1;
+
+    namespace "http://github.com/sonic-net/sonic-scheduled-configurations";
+    prefix scheduled-configurations;
+
+    description "SCHEDULED_CONFIGURATIONS YANG Module for SONiC OS Used for Scheduled Configuration";
+
+    revision 2024-05-09 {
+        description "First Revision";
+    }
+
+    container sonic-scheduled-configurations {
+
+        container SCHEDULED_CONFIGURATIONS {
+
+            description "TIME_RANGE part of config_db.json";
+
+            list SCHEDULED_CONFIGURATIONS_LIST {
+                description "List of scheduled configurations, each identified by unique name";
+
+                key "name";
+
+                leaf name {
+                    type string;
+                    description "Unique name for the scheduled configuration";
+                }
+
+                leaf time_range {
+                    mandatory true;
+                    type string {
+                        length "1..255";
+                    }
+                    description "Time range this configuration is bound to";
+                }
+
+                leaf configuration {
+                    mandatory true;
+                    type string;
+                    description "Configuration to be applied to CONFIG_DB in JSON format";
+                }
+
+                leaf deactivation_configuration {
+                    mandatory true;
+                    type string;
+                    description "A configuration to be applied at deactivation, or the string 'remove' to simply remove the configuration at deactivation";
+
+                }
+            } /* end of list SCHEDULED_CONFIGURATIONS_LIST */
+            
+        } /* end of container SCHEDULED_CONFIGURATIONS */
+        
+    } /* end of top level container */
+    
+} /* end of module sonic-scheduled-configurations */

@@ -1,0 +1,49 @@
+# SKIP_HOOK
+
+# # Stage 1: Setup Debian environment
+# FROM debian:bookworm-slim as debian-base
+
+# RUN apt-get update && \
+#     apt-get install -y dpkg apt-utils libc6 && \
+#     rm -rf /var/lib/apt/lists/*
+
+FROM prom/prometheus:v3.2.1
+
+# USER root
+
+# # Copy system files from debian
+# COPY --from=debian-base /bin/sh /bin/sh
+# COPY --from=debian-base /bin/bash /bin/bash
+# COPY --from=debian-base /usr/bin/dpkg /usr/bin/dpkg
+# COPY --from=debian-base /usr/bin/apt* /usr/bin/
+# COPY --from=debian-base /lib/ /lib/
+# COPY --from=debian-base /lib64/ /lib64/
+# COPY --from=debian-base /usr/lib/ /usr/lib/
+# COPY --from=debian-base /etc/apt/ /etc/apt/
+# COPY --from=debian-base /var/lib/dpkg/ /var/lib/dpkg/
+# COPY --from=debian-base /var/lib/apt/ /var/lib/apt/
+
+# # Create directories with correct permissions
+# RUN mkdir -p /var/lib/apt/lists /var/cache/apt/archives && \
+#     chown -R root:root /var/lib/apt /var/cache/apt /usr/bin/apt* && \
+#     chmod 755 /usr/bin/apt*
+
+# # Initialize package system
+# RUN apt-get update && \
+#     apt-get install -y dpkg apt-utils && \
+#     rm -rf /var/lib/apt/lists/*
+
+LABEL maintainer="SONiC Team"
+LABEL description="Prometheus monitoring for SONiC"
+
+# Build arguments
+ARG docker_container_name
+ARG image_version
+ARG SONIC_VERSION_CACHE
+ARG SONIC_VERSION_CONTROL_COMPONENTS
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV IMAGE_VERSION=$image_version
+
+# # Switch back to prometheus user
+# USER nobody

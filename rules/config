@@ -334,3 +334,9 @@ SONIC_PTF_ENV_PY_VER = mixed
 
 # Add timeout on some process which may hangs
 BUILD_PROCESS_TIMEOUT ?= 0
+
+# Build with debian slim image
+BUILD_DEBIAN_SLIM = n
+
+# Squash base docker image to save space and remove secrets in image layers
+SQUASH_BASE_DEBIAN_IMAGE = n

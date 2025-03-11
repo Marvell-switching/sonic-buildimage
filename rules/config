@@ -10,7 +10,7 @@
 # SONIC_CONFIG_BUILD_JOBS - set number of jobs for parallel build.
 # Corresponding -j argument will be passed to make command inside docker
 # container.
-SONIC_CONFIG_BUILD_JOBS = 1
+SONIC_CONFIG_BUILD_JOBS = 12
 
 # SONIC_CONFIG_MAKE_JOBS - set number of parallel make jobs per package.
 # Corresponding -j argument will be passed to make/dpkg commands that build separate packages
@@ -49,7 +49,7 @@ SMARTSWITCH ?= 0
 DEFAULT_USERNAME = admin
 
 # DEFAULT_PASSWORD - default password for installer build
-DEFAULT_PASSWORD = YourPaSsWoRd
+DEFAULT_PASSWORD = Marv12\#$
 
 # ENABLE_ZTP - installs Zero Touch Provisioning support.
 # ENABLE_ZTP = y
@@ -153,7 +153,7 @@ INCLUDE_RESTAPI ?= n
 INCLUDE_NAT = y
 
 # INCLUDE_DHCP_RELAY - build and install dhcp-relay package
-INCLUDE_DHCP_RELAY = y
+INCLUDE_DHCP_RELAY = n
 
 # INCLUDE_DHCP_SERVER - build and install dhcp-server package
 INCLUDE_DHCP_SERVER ?= n

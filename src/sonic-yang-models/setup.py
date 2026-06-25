@@ -78,6 +78,7 @@ def print_yang_files_validation_report(yang_files_list):
 # Specify only the file basenames here; directory prefixes will be added automatically.
 yang_files = [
     'sonic-acl.yang',
+    'sonic-ars.yang',
     'sonic-asic-sensors.yang',
     'sonic-auto_techsupport.yang',
     'sonic-banner.yang',
@@ -128,6 +129,7 @@ yang_files = [
     'sonic-events-host.yang',
     'sonic-events-swss.yang',
     'sonic-events-syncd.yang',
+    'sonic-evpn.yang',
     'sonic-exp-fc-map.yang',
     'sonic-extension.yang',
     'sonic-fabric-monitor.yang',
@@ -144,10 +146,12 @@ yang_files = [
     'sonic-interface.yang',
     'sonic-kdump.yang',
     'sonic-kubernetes_master.yang',
+    'sonic-leak-control.yang',
     'sonic-lldp.yang',
     'sonic-logger.yang',
     'sonic-loopback-interface.yang',
     'sonic-lossless-traffic-pattern.yang',
+    'sonic-mac-move-guard.yang',
     'sonic-macsec.yang',
     'sonic-mclag.yang',
     'sonic-memory-statistics.yang',
@@ -185,6 +189,7 @@ yang_files = [
     'sonic-spanning-tree.yang',
     'sonic-srv6.yang',
     'sonic-ssh-server.yang',
+    'sonic-static-anycast-gateway.yang',
     'sonic-static-route.yang',
     'sonic-storm-control.yang',
     'sonic-stormond-config.yang',
@@ -217,6 +222,8 @@ yang_files = [
     'sonic-xcvrd-log.yang',
     'sonic-ztp.yang',
     'sonic-fast-linkup.yang',
+    'sonic-alarm.yang',
+    'sonic-event.yang',
 ]
 
 class my_build_py(build_py):
@@ -283,7 +290,7 @@ setup(
     ],
     tests_require = [
         'pytest',
-        'ijson==3.2.3'
+        'ijson>=3.2.3'
     ],
     setup_requires = [
         'pytest-runner',
@@ -292,7 +299,7 @@ setup(
     extras_require = {
         "testing": [
             'pytest',
-            'ijson==3.2.3'
+            'ijson>=3.2.3'
         ],
     },
     include_package_data=True,
